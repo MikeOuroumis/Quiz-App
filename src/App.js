@@ -135,7 +135,3 @@ function tryAgain(){
     textDisplay()
   );
 }
-
-//na xwrisw ta components
-//den exw epanaxrhsimopoioumena pragmata wste na ta kanw components
-//na balw try again button, na to katharograpsw kai na to anevasw sto github
