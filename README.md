@@ -4,6 +4,7 @@
 
 ## How to run the application on localhost
 
+```
 $ git clone https://github.com/MikeOuroumis/Quiz-App.git
 
 $ cd ..
@@ -11,3 +12,4 @@ $ cd ..
 $ npm install
 
 $ npm start
+```
