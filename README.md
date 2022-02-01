@@ -12,8 +12,6 @@ $ npm install
 $ npm start
 ```
 
-## How to use it
-
-Easily change the questions and answers in App.js
+## Easily change the questions and answers in App.js
 
 ![questions photo](https://github.com/MikeOuroumis/Quiz-App/blob/master/resources/questions.jpg)
