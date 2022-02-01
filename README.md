@@ -1,6 +1,6 @@
 # Simple Quiz Application
 
-
+![checkbox animation](https://github.com/MikeOuroumis/Quiz-App/blob/master/resources/quiz-app-gif.gif)
 
 # Getting Started with Create React App
 
