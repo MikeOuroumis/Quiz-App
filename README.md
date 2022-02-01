@@ -7,8 +7,6 @@
 ```
 $ git clone https://github.com/MikeOuroumis/Quiz-App.git
 
-$ cd ..
-
 $ npm install
 
 $ npm start
