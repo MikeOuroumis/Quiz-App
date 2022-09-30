@@ -7,6 +7,7 @@ export default function App() {
   let [loadedQuestions, setLoadedQuestions] = React.useState([0]);
   let results = [];
   let answers = [];
+  const [isFetching, setIsFetching] = React.useState([true]);
 
   async function fetchData() {
     //Async await syntax usage only
@@ -15,6 +16,7 @@ export default function App() {
     );
     const data = await response.json();
     results = data.results;
+    setIsFetching(false);
     return results;
   }
 
@@ -81,7 +83,7 @@ export default function App() {
         </h5>
       </div>
     );
-  }, 1000);
+  }, 200);
 
   const afterFinish = (
     <div>
