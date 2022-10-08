@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect } from "react";
 import axios from "axios";
+import "./App.css";
 
 export default function App() {
   //the array of loadedQuestions that was is fetched from API
@@ -90,7 +91,7 @@ export default function App() {
         <option value={id}>{name}</option>
       ));
       beforeFinish = (
-        <>
+        <div className="beforeFinish-container">
           <h1>Welcome to Michael's Ouroumis quiz!</h1>
           <p>
             Based on{" "}
@@ -105,7 +106,7 @@ export default function App() {
               {categoryNames}
             </select>
           </label>
-        </>
+        </div>
       );
     }
   }
@@ -126,11 +127,13 @@ export default function App() {
       )
     );
     beforeFinish = (
-      <div>
+      <div className="beforeFinish-container">
         <h5 className="m-3" style={{ textDecoration: "underline" }}>
           {loadedQuestions[currentQuestion].question}
         </h5>
-        <ol style={{ listStyleType: "lower-latin" }}>{answers}</ol>
+        <ol style={{ listStyleType: "lower-latin", marginLeft: "-25px" }}>
+          {answers}
+        </ol>
         <button
           onClick={() => nextQuestionFunction()}
           style={{
@@ -149,7 +152,7 @@ export default function App() {
     );
   }
   const afterFinish = (
-    <div>
+    <div className="afterFinish-container">
       <h1>Finished!</h1>
       <h5>
         Your Score is{" "}

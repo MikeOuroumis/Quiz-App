@@ -1,0 +1,35 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  background: url(/resources/background.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: "100vw";
+  min-height: "100vh";
+  z-index: 1;
+  margin: auto;
+  direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  justify-content: center;
+}
+.beforeFinish-container,
+.afterFinish-container {
+  /* text-align: center; */
+  /* margin: 0; */
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+li {
+  list-style-position: inside;
+}
