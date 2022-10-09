@@ -32,4 +32,15 @@ html {
 
 li {
   list-style-position: inside;
+  margin: 20px 0 20px 0;
+}
+
+.answers {
+  cursor: pointer;
+  padding: 10px;
+  background-color: grey;
+  margin: 20px;
+  border: 2px;
+  border-color: blue;
+  border-radius: 10%;
 }

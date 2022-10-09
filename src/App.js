@@ -1,3 +1,12 @@
+/*******BIG TASKS*********
+ * USERNAME
+ * LOCALSTORAGE
+ *
+ * ****SMALL TASKS*****
+ * COMPONENTS
+ * STYLING
+ */
+
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect } from "react";
@@ -92,7 +101,7 @@ export default function App() {
       ));
       beforeFinish = (
         <div className="beforeFinish-container">
-          <h1>Welcome to Michael's Ouroumis quiz!</h1>
+          <h1>Welcome to Michael's Ouroumis quiz game!</h1>
           <p>
             Based on{" "}
             <span style={{ textDecoration: "underline" }}>
@@ -118,8 +127,13 @@ export default function App() {
           <span
             key={currentQuestion.toString()}
             onClick={() => handleClick(element)}
-            style={{ cursor: "pointer" }}
-            className={isClicked ? textColor(element) : "bg"}
+            style={{
+              cursor: "pointer",
+              padding: "10px",
+              margin: "20px",
+              borderRadius: "10px",
+            }}
+            className={isClicked ? textColor(element) : "bg-dark"}
           >
             {element}
           </span>
@@ -131,7 +145,7 @@ export default function App() {
         <h5 className="m-3" style={{ textDecoration: "underline" }}>
           {loadedQuestions[currentQuestion].question}
         </h5>
-        <ol style={{ listStyleType: "lower-latin", marginLeft: "-25px" }}>
+        <ol style={{ listStyleType: "none", marginLeft: "-20px" }}>
           {answers}
         </ol>
         <button
@@ -183,8 +197,8 @@ export default function App() {
   function textColor(element) {
     let classN = "bg ";
     element === loadedQuestions[currentQuestion].correct_answer
-      ? (classN += "bg-info")
-      : (classN += "bg-secondary");
+      ? (classN += "bg-success")
+      : (classN += "bg-dark");
 
     return classN;
   }
