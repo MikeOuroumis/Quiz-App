@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useEffect } from "react";
 import axios from "axios";
 import "./App.css";
+import { RingLoader } from "react-spinners";
 
 export default function App() {
   //the array of questions that was is fetched from API
@@ -19,7 +20,6 @@ export default function App() {
   let [rawQuestions, setRawQuestions] = React.useState([]);
   let [isFetching, setIsFetching] = React.useState(true);
   let [fetchingCategories, setFetchingCategories] = React.useState(true);
-  let categoryChose = false;
   let [categories, setCategories] = React.useState([]);
   const [isClicked, setIsClicked] = React.useState(false);
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
@@ -41,7 +41,6 @@ export default function App() {
       setCategories(categories);
       fetchingCategories = false;
       setFetchingCategories(false);
-      console.log(response);
     } catch (err) {
       alert(err);
     }
@@ -120,32 +119,40 @@ export default function App() {
   }
 
   //choose category first
-  if (!categoryChose) {
-    if (!fetchingCategories) {
-      const categoryNames = categories.map(({ id, name }) => (
-        <option value={id}>{name}</option>
-      ));
+  if (!fetchingCategories) {
+    const categoryNames = categories.map(({ id, name }) => (
+      <option value={id}>{name}</option>
+    ));
 
-      beforeFinish = (
-        <div className="beforeFinish-container">
-          <h1>Welcome to Michael's Ouroumis quiz game!</h1>
-          <p>
-            Based on{" "}
-            <span style={{ textDecoration: "underline" }}>
-              Open Trivia Database!
-            </span>
-          </p>
-          <label style={{ color: "#0c88fb" }}>
-            <h4>Choose category to test your knowledge!</h4> <br />
-            {/* handleClickCategoryChoose leads to fetchData() based on the category of the value */}
-            <select onChange={handleClickCategoryChoose}>
-              {categoryNames}
-            </select>
-          </label>
-        </div>
-      );
-    }
-  }
+    beforeFinish = (
+      <div className="beforeFinish-container">
+        <h1>Welcome to Michael's Ouroumis quiz game!</h1>
+        <p>
+          Based on{" "}
+          <span style={{ textDecoration: "underline" }}>
+            Open Trivia Database!
+          </span>
+        </p>
+        <label style={{ color: "#0c88fb" }}>
+          <h4>Choose category to test your knowledge!</h4> <br />
+          {/* handleClickCategoryChoose leads to fetchData() based on the category of the value */}
+          <select onChange={handleClickCategoryChoose}>{categoryNames}</select>
+        </label>
+      </div>
+    );
+  } else
+    beforeFinish = (
+      <div
+        style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <RingLoader color="#36d7b7" size={150} />
+      </div>
+    );
 
   if (!isFetching) {
     answers = questions[currentQuestion].incorrect_answers.map((element) => (
@@ -165,6 +172,7 @@ export default function App() {
         </span>
       </li>
     ));
+
     beforeFinish = (
       <div className="beforeFinish-container">
         <h5 className="m-3" style={{ textDecoration: "underline" }}>
