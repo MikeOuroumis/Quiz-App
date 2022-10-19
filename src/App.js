@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 import { RingLoader } from "react-spinners";
+import Answer from "./components/Answer";
 
 export default function App() {
   //the array of questions that was is fetched from API
@@ -157,19 +158,11 @@ export default function App() {
   if (!isFetching) {
     answers = questions[currentQuestion].incorrect_answers.map((element) => (
       <li>
-        <span
-          key={currentQuestion.toString()}
+        <Answer
+          text={element}
           onClick={() => handleClick(element)}
-          style={{
-            cursor: "pointer",
-            padding: "10px",
-            margin: "20px",
-            borderRadius: "10px",
-          }}
           className={isClicked ? textColor(element) : "bg-dark"}
-        >
-          {element}
-        </span>
+        />
       </li>
     ));
 
