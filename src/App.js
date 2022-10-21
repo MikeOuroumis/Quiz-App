@@ -175,7 +175,7 @@ export default function App() {
         <ol style={{ listStyleType: "none", marginLeft: "-20px" }}>
           {answers}
         </ol>
-        <Button onClick={() => nextQuestionFunction()} text="Next Question" />
+        <Button onClick={nextQuestionFunction} text="Next Question" />
 
         <h5 style={{ marginTop: 15, marginLeft: 10 }}>
           Your score is{" "}
@@ -191,7 +191,7 @@ export default function App() {
         Your Score is{" "}
         <span style={{ color: "#0c88fb", fontWeight: "bold" }}>{score}</span>
       </h5>
-      <Button onClick={() => tryAgain()} text="Try Again" />
+      <Button onClick={tryAgain} text="Try Again" />
     </div>
   );
   function handleClickCategoryChoose(event) {
