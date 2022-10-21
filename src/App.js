@@ -27,6 +27,7 @@ export default function App() {
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [score, setScore] = React.useState(0);
   const [finished, setFinished] = React.useState(false);
+  const [questionId, setQuestionId] = React.useState("");
   let answers = [];
   let beforeFinish = null;
 
@@ -137,8 +138,10 @@ export default function App() {
         </p>
         <label style={{ color: "#0c88fb" }}>
           <h4>Choose category to test your knowledge!</h4> <br />
-          {/* handleClickCategoryChoose leads to fetchData() based on the category of the value */}
-          <select onChange={handleClickCategoryChoose}>{categoryNames}</select>
+          <form onSubmit={handleSubmit}>
+            <select onChange={handleChange}>{categoryNames}</select>
+            <Button type="submit" text="Start" />
+          </form>
         </label>
       </div>
     );
@@ -194,9 +197,14 @@ export default function App() {
       <Button onClick={tryAgain} text="Try Again" />
     </div>
   );
-  function handleClickCategoryChoose(event) {
-    const id = event.target.value;
-    fetchQuestions(id);
+
+  function handleChange(event) {
+    setQuestionId(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    fetchQuestions(questionId);
+    event.preventDefault();
   }
 
   function handleClick(element) {
