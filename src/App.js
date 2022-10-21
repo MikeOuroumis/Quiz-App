@@ -14,6 +14,7 @@ import axios from "axios";
 import "./App.css";
 import { RingLoader } from "react-spinners";
 import Answer from "./components/Answer";
+import Button from "./components/Button";
 
 export default function App() {
   //the array of questions that was is fetched from API
@@ -174,16 +175,8 @@ export default function App() {
         <ol style={{ listStyleType: "none", marginLeft: "-20px" }}>
           {answers}
         </ol>
-        <button
-          onClick={() => nextQuestionFunction()}
-          style={{
-            backgroundColor: "#0c88fb",
-            color: "white",
-            marginLeft: 10,
-          }}
-        >
-          Next Question
-        </button>
+        <Button onClick={() => nextQuestionFunction()} text="Next Question" />
+
         <h5 style={{ marginTop: 15, marginLeft: 10 }}>
           Your score is{" "}
           <span style={{ color: "#0c88fb", fontWeight: "bold" }}>{score}</span>!
@@ -198,12 +191,7 @@ export default function App() {
         Your Score is{" "}
         <span style={{ color: "#0c88fb", fontWeight: "bold" }}>{score}</span>
       </h5>
-      <button
-        onClick={() => tryAgain()}
-        style={{ backgroundColor: "#0c88fb", color: "white", marginLeft: 2 }}
-      >
-        Try Again
-      </button>
+      <Button onClick={() => tryAgain()} text="Try Again" />
     </div>
   );
   function handleClickCategoryChoose(event) {
