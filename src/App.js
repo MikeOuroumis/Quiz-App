@@ -3,7 +3,6 @@
  * LOCALSTORAGE
  *
  * ****SMALL TASKS*****
- * COMPONENTS
  * STYLING
  */
 
@@ -19,9 +18,8 @@ import QuizScreen from "./components/QuizScreen";
 import FinishScreen from "./components/FinishScreen";
 
 export default function App() {
-  //the array of questions that was is fetched from API
-  let [questions, setQuestions] = React.useState([]);
-  let [rawQuestions, setRawQuestions] = React.useState([]);
+  //the array of results that was is fetched from API
+  let [results, setResults] = React.useState([]);
   let [isFetching, setIsFetching] = React.useState(true);
   let [fetchingCategories, setFetchingCategories] = React.useState(true);
   let [categories, setCategories] = React.useState([]);
@@ -44,14 +42,13 @@ export default function App() {
       const data = await response.data;
       categories = data.trivia_categories;
       setCategories(categories);
-      fetchingCategories = false;
       setFetchingCategories(false);
     } catch (err) {
       alert(err);
     }
   }
 
-  async function fetchQuestions(categoryId) {
+  async function fetchresults(categoryId) {
     try {
       const response = await axios.get(
         `https://opentdb.com/api.php?amount=10&category=${categoryId}&difficulty=easy&type=multiple`
@@ -69,54 +66,25 @@ export default function App() {
             : code === 3
             ? "Token Not Found. Session Token does not exist."
             : "Token Empty Session. Token has returned all possible questions for the specified query. Resetting the Token is necessary.";
-        // :code =3?4)
+
         throw new Error(`${err}`);
       } else {
         const data = await response.data;
-        rawQuestions = data.results;
+        results = data.results;
 
         //adding the correct answer to incorrect_answers array
-        for (let obj of rawQuestions)
-          obj.incorrect_answers.splice(
+        for (let result of results)
+          result.incorrect_answers.splice(
             Math.floor(Math.random() * 4),
             0,
-            obj.correct_answer
+            result.correct_answer
           );
 
-        //replace every &quot; with " and every &#039; with '
-        for (let obj of rawQuestions) {
-          //here adjust the question text
-          obj.question = obj.question.replaceAll("&quot;", '"');
-          obj.question = obj.question.replaceAll("&#039;", "'");
-          obj.question = obj.question.replaceAll("&rsquo;", "'");
-
-          //adjust the correct answer because it must be the same when it is checked in conditional statement below
-          obj.correct_answer = obj.correct_answer.replaceAll("&quot;", '"');
-          obj.correct_answer = obj.correct_answer.replaceAll("&#039;", "'");
-          obj.correct_answer = obj.correct_answer.replaceAll("&rsquo;", "'");
-
-          for (let x = 0; x < obj.incorrect_answers.length; x++) {
-            obj.incorrect_answers[x] = obj.incorrect_answers[x].replaceAll(
-              "&quot;",
-              '"'
-            );
-            obj.incorrect_answers[x] = obj.incorrect_answers[x].replaceAll(
-              "&#039;",
-              "'"
-            );
-            obj.incorrect_answers[x] = obj.incorrect_answers[x].replaceAll(
-              "&rsquo;",
-              "'"
-            );
-          }
-        }
-        questions = rawQuestions;
-        setQuestions(questions);
-        console.log(questions);
+        setResults(results);
+        console.log(results);
 
         setIsFetching(false);
-        isFetching = false;
-        return questions;
+        return results;
       }
     } catch (err) {
       alert(err);
@@ -151,7 +119,7 @@ export default function App() {
     );
 
   if (!isFetching) {
-    answers = questions[currentQuestion].incorrect_answers.map((element) => (
+    answers = results[currentQuestion].incorrect_answers.map((element) => (
       <li>
         <Answer
           text={element}
@@ -163,7 +131,7 @@ export default function App() {
 
     screen = (
       <QuizScreen
-        title={questions[currentQuestion].question}
+        title={results[currentQuestion].question}
         answers={answers}
         onClick={nextQuestionFunction}
         score={score}
@@ -177,7 +145,7 @@ export default function App() {
   }
 
   function handleSubmit(event) {
-    fetchQuestions(questionId);
+    fetchresults(questionId);
     event.preventDefault();
   }
 
@@ -185,14 +153,14 @@ export default function App() {
     setIsClicked(true);
     textColor(element);
 
-    if (element === questions[currentQuestion].correct_answer) {
-      setScore(score + 100 / questions.length);
+    if (element === results[currentQuestion].correct_answer) {
+      setScore(score + 100 / results.length);
     }
   }
 
   function textColor(element) {
     let classN = "bg ";
-    element === questions[currentQuestion].correct_answer
+    element === results[currentQuestion].correct_answer
       ? (classN += "bg-success")
       : (classN += "bg-dark");
 
@@ -200,7 +168,7 @@ export default function App() {
   }
 
   function nextQuestionFunction() {
-    if (currentQuestion + 1 === questions.length) {
+    if (currentQuestion + 1 === results.length) {
       setFinished(true);
     } else {
       setCurrentQuestion(currentQuestion + 1);
