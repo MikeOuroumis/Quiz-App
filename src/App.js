@@ -14,7 +14,9 @@ import axios from "axios";
 import "./App.css";
 import { RingLoader } from "react-spinners";
 import Answer from "./components/Answer";
-import Button from "./components/Button";
+import StartingScreen from "./components/StartingScreen";
+import QuizScreen from "./components/QuizScreen";
+import FinishScreen from "./components/FinishScreen";
 
 export default function App() {
   //the array of questions that was is fetched from API
@@ -29,7 +31,7 @@ export default function App() {
   const [finished, setFinished] = React.useState(false);
   const [questionId, setQuestionId] = React.useState("");
   let answers = [];
-  let beforeFinish = null;
+  let screen = null;
 
   useEffect(() => {
     fetchCategories();
@@ -127,26 +129,15 @@ export default function App() {
       <option value={id}>{name}</option>
     ));
 
-    beforeFinish = (
-      <div className="beforeFinish-container">
-        <h1>Welcome to Michael's Ouroumis quiz game!</h1>
-        <p>
-          Based on{" "}
-          <span style={{ textDecoration: "underline" }}>
-            Open Trivia Database!
-          </span>
-        </p>
-        <label style={{ color: "#0c88fb" }}>
-          <h4>Choose category to test your knowledge!</h4> <br />
-          <form onSubmit={handleSubmit}>
-            <select onChange={handleChange}>{categoryNames}</select>
-            <Button type="submit" text="Start" />
-          </form>
-        </label>
-      </div>
+    screen = (
+      <StartingScreen
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        content={categoryNames}
+      />
     );
   } else
-    beforeFinish = (
+    screen = (
       <div
         style={{
           position: "fixed",
@@ -170,33 +161,16 @@ export default function App() {
       </li>
     ));
 
-    beforeFinish = (
-      <div className="beforeFinish-container">
-        <h5 className="m-3" style={{ textDecoration: "underline" }}>
-          {questions[currentQuestion].question}
-        </h5>
-        <ol style={{ listStyleType: "none", marginLeft: "-20px" }}>
-          {answers}
-        </ol>
-        <Button onClick={nextQuestionFunction} text="Next Question" />
-
-        <h5 style={{ marginTop: 15, marginLeft: 10 }}>
-          Your score is{" "}
-          <span style={{ color: "#0c88fb", fontWeight: "bold" }}>{score}</span>!
-        </h5>
-      </div>
+    screen = (
+      <QuizScreen
+        title={questions[currentQuestion].question}
+        answers={answers}
+        onClick={nextQuestionFunction}
+        score={score}
+      />
     );
   }
-  const afterFinish = (
-    <div className="afterFinish-container">
-      <h1>Finished!</h1>
-      <h5>
-        Your Score is{" "}
-        <span style={{ color: "#0c88fb", fontWeight: "bold" }}>{score}</span>
-      </h5>
-      <Button onClick={tryAgain} text="Try Again" />
-    </div>
-  );
+  if (finished) screen = <FinishScreen score={score} onClick={tryAgain} />;
 
   function handleChange(event) {
     setQuestionId(event.target.value);
@@ -234,14 +208,6 @@ export default function App() {
     }
   }
 
-  function textDisplay() {
-    if (finished) {
-      return afterFinish;
-    } else {
-      return beforeFinish;
-    }
-  }
-
   function tryAgain() {
     setCurrentQuestion(0);
     setScore(0);
@@ -250,5 +216,5 @@ export default function App() {
     setIsFetching(true);
   }
 
-  return textDisplay();
+  return screen;
 }

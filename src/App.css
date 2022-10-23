@@ -17,10 +17,7 @@ html {
   text-align: center;
   justify-content: center;
 }
-.beforeFinish-container,
-.afterFinish-container {
-  /* text-align: center; */
-  /* margin: 0; */
+.quiz-container {
   margin: 0;
   position: absolute;
   top: 50%;
