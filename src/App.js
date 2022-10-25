@@ -16,6 +16,8 @@ import Answer from "./components/Answer";
 import StartingScreen from "./components/StartingScreen";
 import QuizScreen from "./components/QuizScreen";
 import FinishScreen from "./components/FinishScreen";
+import RegisterScreen from "./components/RegisterScreen";
+import LoginScreen from "./components/LoginScreen";
 
 export default function App() {
   //the array of results that was is fetched from API
@@ -184,5 +186,5 @@ export default function App() {
     setIsFetching(true);
   }
 
-  return screen;
+  return <RegisterScreen />;
 }
