@@ -2,7 +2,7 @@ import React from "react";
 import Button from "./Button";
 import { useEffect, useState } from "react";
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   let [isValid, setIsValid] = React.useState(false);
 
   const [user, setUser] = React.useState({
@@ -19,7 +19,7 @@ export default function LoginScreen() {
     password: null,
   });
 
-  let [userIsNew, setUserIsNew] = useState(false);
+  let [userIsNew, setUserIsNew] = useState(true);
 
   useEffect(() => {
     //logic for getting a value from local storage stored under the key 'key'
@@ -47,7 +47,6 @@ export default function LoginScreen() {
     console.log(`is valid: ${isValid}`);
 
     for (const item of usersArray) {
-      console.log(item);
       if (user.email === item.email) {
         setUserIsNew(false);
         userIsNew = false;

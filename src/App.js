@@ -186,5 +186,5 @@ export default function App() {
     setIsFetching(true);
   }
 
-  return <RegisterScreen />;
+  return <LoginScreen />;
 }
