@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "./Button";
-import { useState, useEffect } from "react";
 
 export default function LoginScreen() {
   const [user, setUser] = React.useState({
@@ -35,7 +34,6 @@ export default function LoginScreen() {
 
     //Does user exist?
     for (const item of usersArray) {
-      // console.log(item);
       if (user.email === item.email) {
         setUserExists(true);
         userExists = true;
@@ -51,8 +49,18 @@ export default function LoginScreen() {
     }
     curUserEmail = usersArray[userIndex].email;
     curUserPassword = usersArray[userIndex].password;
+
     //if the password is correct then login...
-    if (curUserPassword === event.target.password.value) console.log("login"); //here must follow the login code...
+    if (curUserPassword === event.target.password.value) {
+      console.log("logged in");
+      //here must follow the login code...
+      //pass user data to App.js
+      //pass userIndex to App.js
+      const currentUser = usersArray[userIndex];
+      //how to pass currentUser to App.js
+      return currentUser;
+    }
+
     if (userExists) console.log("user exists");
     else console.log("user doesn't exist");
   }

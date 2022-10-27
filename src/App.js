@@ -21,15 +21,16 @@ import LoginScreen from "./components/LoginScreen";
 
 export default function App() {
   //the array of results that was is fetched from API
-  let [results, setResults] = React.useState([]);
-  let [isFetching, setIsFetching] = React.useState(true);
-  let [fetchingCategories, setFetchingCategories] = React.useState(true);
-  let [categories, setCategories] = React.useState([]);
-  const [isClicked, setIsClicked] = React.useState(false);
-  const [currentQuestion, setCurrentQuestion] = React.useState(0);
-  const [score, setScore] = React.useState(0);
-  const [finished, setFinished] = React.useState(false);
-  const [questionId, setQuestionId] = React.useState("");
+  let [results, setResults] = useState([]);
+  let [isFetching, setIsFetching] = useState(true);
+  let [fetchingCategories, setFetchingCategories] = useState(true);
+  let [categories, setCategories] = useState([]);
+  let [currentUser, setCurrentUser] = useState({});
+  const [isClicked, setIsClicked] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
+  const [questionId, setQuestionId] = useState("");
   let answers = [];
   let screen = null;
 
