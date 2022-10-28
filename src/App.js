@@ -25,18 +25,31 @@ export default function App() {
   let [isFetching, setIsFetching] = useState(true);
   let [fetchingCategories, setFetchingCategories] = useState(true);
   let [categories, setCategories] = useState([]);
-  let [currentUser, setCurrentUser] = useState({});
+  let [usersArray, setUsersArray] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
+  let [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [questionId, setQuestionId] = useState("");
+  let [user, setUser] = React.useState(null);
   let answers = [];
   let screen = null;
+  let [userIndex, setUserIndex] = useState(null);
 
   useEffect(() => {
     fetchCategories();
+
+    const data = localStorage.getItem("usersArray");
+    data && setUsersArray(JSON.parse(data));
+    if (data) usersArray = JSON.parse(data);
   }, []);
+
+  useEffect(() => {
+    //stores the user only if the form is valid
+    localStorage.setItem("usersArray", JSON.stringify(usersArray));
+    console.log("useEffect ran");
+  }, [score]);
+  // localStorage.setItem("usersArray", JSON.stringify(usersArray));
 
   async function fetchCategories() {
     try {
@@ -50,7 +63,7 @@ export default function App() {
       alert(err);
     }
   }
-
+  // console.log(user);
   async function fetchresults(categoryId) {
     try {
       const response = await axios.get(
@@ -138,6 +151,7 @@ export default function App() {
         answers={answers}
         onClick={nextQuestionFunction}
         score={score}
+        totalScore={usersArray[userIndex].totalScore}
       />
     );
   }
@@ -151,6 +165,7 @@ export default function App() {
     fetchresults(questionId);
     event.preventDefault();
   }
+  console.log(usersArray[userIndex]);
 
   function handleClick(element) {
     setIsClicked(true);
@@ -158,6 +173,16 @@ export default function App() {
 
     if (element === results[currentQuestion].correct_answer) {
       setScore(score + 100 / results.length);
+      score = score + 100 / results.length;
+      console.log(`score is ${score}`);
+      //total score HERE
+      // user.totalScore = user.totalScore + 100 / results.length;
+      console.log(usersArray);
+      console.log(userIndex);
+      usersArray[userIndex].totalScore =
+        usersArray[userIndex].totalScore + 100 / results.length;
+      //set total score to usersArray
+      setUsersArray(usersArray);
     }
   }
 
@@ -186,6 +211,20 @@ export default function App() {
     setFinished(false);
     setIsFetching(true);
   }
-
-  return <LoginScreen />;
+  function getUserIndex(index) {
+    //add totalScore property if doesn't exist
+    if (!usersArray[index].totalScore) {
+      usersArray[index].totalScore = 0;
+      setUsersArray(usersArray);
+    }
+    userIndex = index;
+    setUserIndex(index);
+    setUsersArray(usersArray);
+    setUser(usersArray[index]);
+    user = usersArray[index];
+    console.log(usersArray);
+  }
+  // return <RegisterScreen />;
+  if (!user) return <LoginScreen setUserIndex={getUserIndex} />;
+  else return screen;
 }

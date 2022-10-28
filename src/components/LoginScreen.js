@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "./Button";
 
-export default function LoginScreen() {
+export default function LoginScreen(props) {
   const [user, setUser] = React.useState({
     email: "",
     password: "",
@@ -41,6 +41,7 @@ export default function LoginScreen() {
         console.log(`item: ${usersArray.indexOf(item)}`);
         userIndex = usersArray.indexOf(item);
         console.log(usersArray[userIndex].email);
+
         break;
       } else {
         setUserExists(false);
@@ -58,12 +59,15 @@ export default function LoginScreen() {
       //pass userIndex to App.js
       const currentUser = usersArray[userIndex];
       //how to pass currentUser to App.js
+      //sends the user index to App.js
+      props.setUserIndex(userIndex);
       return currentUser;
     }
 
     if (userExists) console.log("user exists");
     else console.log("user doesn't exist");
   }
+
   function validation() {
     const errors = {};
     if (user.email.trim() === "") errors.email = "Please fill in the email";
@@ -74,6 +78,8 @@ export default function LoginScreen() {
 
   return (
     <div className="quiz-container">
+      <h1 style={{ color: "#0c88fb" }}>Login</h1>
+      <br />
       <form onSubmit={handleSubmit}>
         <label style={{ color: "white" }}>email</label>
         <br />
@@ -98,6 +104,7 @@ export default function LoginScreen() {
         ></input>
         <br />
         {errorMessages.password && <div>{errorMessages.password}</div>} <br />
+        <br />
         <Button type="submit" text="Submit" />
       </form>
     </div>

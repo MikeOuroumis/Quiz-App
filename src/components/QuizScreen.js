@@ -20,6 +20,10 @@ export default function QuizScreen(props) {
         </span>
         !
       </h5>
+      <h5>
+        <span style={{ color: "red" }}>TOTAL SCORE: </span>
+        {props.totalScore}
+      </h5>
     </div>
   );
 }
