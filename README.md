@@ -1,6 +1,8 @@
-# Simple Quiz Application
+# Quiz Application
 
-![checkbox animation](https://github.com/MikeOuroumis/Quiz-App/blob/master/resources/quiz-app-gif.gif)
+Project under development..
+
+![choosing category](./gifs/quiz2.gif)
 
 ## How to run the application on localhost
 
