@@ -1,11 +1,3 @@
-/*******BIG TASKS*********
- * USERNAME
- * LOCALSTORAGE
- *
- * ****SMALL TASKS*****
- * STYLING
- */
-
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect } from "react";
@@ -32,6 +24,7 @@ export default function App() {
   const [finished, setFinished] = useState(false);
   const [questionId, setQuestionId] = useState("");
   let [user, setUser] = React.useState(null);
+  const [registerScreen, setRegisterScreen] = useState(false);
   let answers = [];
   let screen = null;
   let [userIndex, setUserIndex] = useState(null);
@@ -136,11 +129,11 @@ export default function App() {
 
   if (!isFetching) {
     answers = results[currentQuestion].incorrect_answers.map((element) => (
-      <li>
+      <li style={{ margin: "8px 15px 8px 0" }}>
         <Answer
           text={element}
           onClick={() => handleClick(element)}
-          className={isClicked ? textColor(element) : "bg-dark"}
+          className={isClicked ? textColor(element) : "btn btn-light"}
         />
       </li>
     ));
@@ -175,10 +168,7 @@ export default function App() {
       setScore(score + 100 / results.length);
       score = score + 100 / results.length;
       console.log(`score is ${score}`);
-      //total score HERE
-      // user.totalScore = user.totalScore + 100 / results.length;
-      console.log(usersArray);
-      console.log(userIndex);
+
       usersArray[userIndex].totalScore =
         usersArray[userIndex].totalScore + 100 / results.length;
       //set total score to usersArray
@@ -187,10 +177,10 @@ export default function App() {
   }
 
   function textColor(element) {
-    let classN = "bg ";
+    let classN = "btn ";
     element === results[currentQuestion].correct_answer
-      ? (classN += "bg-success")
-      : (classN += "bg-dark");
+      ? (classN += "btn-success")
+      : (classN += "btn-light");
 
     return classN;
   }
@@ -224,7 +214,18 @@ export default function App() {
     user = usersArray[index];
     console.log(usersArray);
   }
+  function registerLogilToggle() {
+    setRegisterScreen(!registerScreen);
+  }
   // return <RegisterScreen />;
-  if (!user) return <LoginScreen setUserIndex={getUserIndex} />;
+  if (!user)
+    return registerScreen ? (
+      <RegisterScreen registerLogilToggle={registerLogilToggle} />
+    ) : (
+      <LoginScreen
+        registerLogilToggle={registerLogilToggle}
+        setUserIndex={getUserIndex}
+      />
+    );
   else return screen;
 }

@@ -4,13 +4,10 @@ export default function Button(props) {
   return (
     <button
       onClick={props.onClick}
-      style={{
-        backgroundColor: "#0c88fb",
-        color: "white",
-        marginLeft: 10,
-      }}
+      className="btn btn-primary"
+      style={props.style}
     >
-      {props.text}{" "}
+      <span>{props.text}</span>
     </button>
   );
 }

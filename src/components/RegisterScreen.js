@@ -2,7 +2,7 @@ import React from "react";
 import Button from "./Button";
 import { useEffect, useState } from "react";
 
-export default function RegisterScreen() {
+export default function RegisterScreen(props) {
   let [isValid, setIsValid] = React.useState(false);
 
   const [user, setUser] = React.useState({
@@ -80,6 +80,8 @@ export default function RegisterScreen() {
 
   return (
     <div className="quiz-container">
+      <h1 style={{ color: "#0c88fb" }}>Register</h1>
+      <br />
       <form onSubmit={handleSubmit}>
         <label style={{ color: "white" }}>Name</label>
         <br />
@@ -92,7 +94,7 @@ export default function RegisterScreen() {
         ></input>
         {errorMessages.name && <div>{errorMessages.name}</div>}
         <br />
-        <label style={{ color: "white" }}>email</label>
+        <label style={{ color: "white" }}>Email</label>
         <br />
         <input
           id="email"
@@ -119,6 +121,17 @@ export default function RegisterScreen() {
         <Button type="submit" text="Submit" />
       </form>
       <p>{!userIsNew && "The user already exists"} </p>
+      <br />
+      <div>
+        Already have an account? Log in{" "}
+        <button
+          className="btn btn-link"
+          onClick={props.registerLogilToggle}
+          style={{ padding: "0", marginTop: "-5px" }}
+        >
+          here
+        </button>
+      </div>
     </div>
   );
 }

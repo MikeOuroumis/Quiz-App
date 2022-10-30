@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from "./Button";
+import RegisterScreen from "./RegisterScreen";
 
 export default function LoginScreen(props) {
   const [user, setUser] = React.useState({
@@ -81,7 +82,7 @@ export default function LoginScreen(props) {
       <h1 style={{ color: "#0c88fb" }}>Login</h1>
       <br />
       <form onSubmit={handleSubmit}>
-        <label style={{ color: "white" }}>email</label>
+        <label style={{ color: "white" }}>Email</label>
         <br />
         <input
           id="email"
@@ -107,6 +108,17 @@ export default function LoginScreen(props) {
         <br />
         <Button type="submit" text="Submit" />
       </form>
+      <div>
+        <br />
+        New user? Register{" "}
+        <button
+          className="btn btn-link"
+          onClick={props.registerLogilToggle}
+          style={{ padding: "0", marginTop: "-5px" }}
+        >
+          here
+        </button>
+      </div>
     </div>
   );
 }

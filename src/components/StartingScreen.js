@@ -13,9 +13,18 @@ export default function StartingScreen(props) {
       </p>
       <label style={{ color: "#0c88fb" }}>
         <h4>Choose category to test your knowledge!</h4> <br />
-        <form onSubmit={props.onSubmit}>
-          <select onChange={props.onChange}>{props.content}</select>
-          <Button type="submit" text="Start" />
+        <form
+          className="form-inline d-inline-flex p-2"
+          onSubmit={props.onSubmit}
+        >
+          <select style={{ height: "35px" }} onChange={props.onChange}>
+            {props.content}
+          </select>
+          <Button
+            style={{ marginTop: "-1px", height: "36px" }}
+            type="submit"
+            text="Start"
+          />
         </form>
       </label>
     </div>
