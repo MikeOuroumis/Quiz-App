@@ -1,14 +1,22 @@
-# Quiz Application
+# Simple Quiz Application
 
-Project under development..
+![checkbox animation](https://github.com/MikeOuroumis/Quiz-App/blob/master/resources/quiz-app-gif.gif)
 
-A quiz application that fetches questions and answers from Open Trivia Database.
+## How to run the application on localhost
 
-The user can choose a category from Open Trivia Database and run the quiz.
+```
+$ git clone https://github.com/MikeOuroumis/Quiz-App.git
 
-![showing how the user choose a category](./gifs/quiz2.gif)
+$ npm install
 
-Every user has to Register with Email, Name and Password so he can see the TOTAL
-SCORE from all the previous tries added to the current try.
+$ npm start
+```
 
-![showing how changes from Login to Register screen](./gifs/quiz1.gif)
+## Easily change the questions and answers in App.js
+
+![questions photo](https://github.com/MikeOuroumis/Quiz-App/blob/master/resources/questions.jpg)
+
+## Technologies
+
+1. Reactjs
+2. Bootstrap
