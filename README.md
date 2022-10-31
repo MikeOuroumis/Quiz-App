@@ -28,6 +28,11 @@ total score increase by 10.
 
 ![quiz interface](./gifs/quiz3.gif)
 
+## why I used the localstorage
+
+Localstorage is not the ideal way to store the users' data, but for simplicity
+reasons I used it to implement a login/logout and register UI.
+
 ## How to run the application on localhost
 
 ```
@@ -38,7 +43,8 @@ $ npm install
 $ npm start
 ```
 
-## Technologies
+## Tech stack
 
 1. Reactjs
-2. Bootstrap
+2. Axios
+3. Bootstrap
