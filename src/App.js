@@ -40,7 +40,6 @@ export default function App() {
   useEffect(() => {
     //stores the user only if the form is valid
     localStorage.setItem("usersArray", JSON.stringify(usersArray));
-    console.log("useEffect ran");
   }, [score]);
   // localStorage.setItem("usersArray", JSON.stringify(usersArray));
 
@@ -56,13 +55,11 @@ export default function App() {
       alert(err);
     }
   }
-  // console.log(user);
   async function fetchresults(categoryId) {
     try {
       const response = await axios.get(
         `https://opentdb.com/api.php?amount=10&category=${categoryId}&difficulty=easy&type=multiple`
       );
-      console.log(response);
       const code = response.data.response_code;
 
       //manual error if promise is rejected..
@@ -80,17 +77,24 @@ export default function App() {
       } else {
         const data = await response.data;
         results = data.results;
+        // creating the all_answers array
+        for (let result of results) {
+          result.all_answers = [
+            ...result.incorrect_answers,
+            result.correct_answer,
+          ];
+          // shuffling the answers in the array
+          for (let i = result.all_answers.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [result.all_answers[i], result.all_answers[j]] = [
+              result.all_answers[j],
+              result.all_answers[i],
+            ];
+          }
+        }
 
-        //adding the correct answer to incorrect_answers array
-        for (let result of results)
-          result.incorrect_answers.splice(
-            Math.floor(Math.random() * 4),
-            0,
-            result.correct_answer
-          );
-
-        setResults(results);
         console.log(results);
+        setResults(results);
 
         setIsFetching(false);
         return results;
@@ -128,8 +132,8 @@ export default function App() {
     );
 
   if (!isFetching) {
-    answers = results[currentQuestion].incorrect_answers.map((element) => (
-      <li style={{ margin: "8px 15px 8px 0" }}>
+    answers = results[currentQuestion].all_answers.map((element) => (
+      <li key={element} style={{ margin: "8px 15px 8px 0" }}>
         <Answer
           text={element}
           onClick={() => handleClick(element)}
@@ -158,20 +162,17 @@ export default function App() {
     fetchresults(questionId);
     event.preventDefault();
   }
-  console.log(usersArray[userIndex]);
 
   function handleClick(element) {
     setIsClicked(true);
-    textColor(element);
 
     if (element === results[currentQuestion].correct_answer) {
       setScore(score + 100 / results.length);
-      score = score + 100 / results.length;
-      console.log(`score is ${score}`);
 
       usersArray[userIndex].totalScore =
         usersArray[userIndex].totalScore + 100 / results.length;
-      //set total score to usersArray
+
+      //set total score to usersArray and run the useEffect
       setUsersArray(usersArray);
     }
   }
@@ -212,7 +213,6 @@ export default function App() {
     setUsersArray(usersArray);
     setUser(usersArray[index]);
     user = usersArray[index];
-    console.log(usersArray);
   }
   function registerLogilToggle() {
     setRegisterScreen(!registerScreen);

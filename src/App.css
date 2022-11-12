@@ -2,7 +2,9 @@ body,
 html {
   height: 100%;
   margin: 0;
-  background: url(/resources/background.jpg) no-repeat center center fixed;
+  /* background: url(/resources/Red-Blue-Abstract-Background.jpg) no-repeat center
+    center fixed; */
+  background-color: #0d6efd;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -16,6 +18,7 @@ html {
   justify-content: center;
   text-align: center;
   justify-content: center;
+  font-family: roboto;
 }
 .quiz-container {
   margin: 0;
@@ -25,6 +28,13 @@ html {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   color: white;
+  max-width: 600px;
+  min-width: 400px;
+  background: #000000;
+  padding: 30px;
+  border-radius: 10px;
+  border-color: rgb(202, 202, 255);
+  border-style: solid;
 }
 
 li {
