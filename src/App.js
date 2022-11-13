@@ -41,7 +41,6 @@ export default function App() {
     //stores the user only if the form is valid
     localStorage.setItem("usersArray", JSON.stringify(usersArray));
   }, [score]);
-  // localStorage.setItem("usersArray", JSON.stringify(usersArray));
 
   async function fetchCategories() {
     try {
@@ -79,21 +78,17 @@ export default function App() {
         results = data.results;
         // creating the all_answers array
         for (let result of results) {
-          result.all_answers = [
-            ...result.incorrect_answers,
-            result.correct_answer,
-          ];
-          // shuffling the answers in the array
-          for (let i = result.all_answers.length - 1; i > 0; i--) {
+          let allAnswers = [...result.incorrect_answers, result.correct_answer];
+          // shuffling the answers in the array with Durstenfeld shuffle method
+          for (let i = allAnswers.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [result.all_answers[i], result.all_answers[j]] = [
-              result.all_answers[j],
-              result.all_answers[i],
-            ];
+            [allAnswers[i], allAnswers[j]] = [allAnswers[j], allAnswers[i]];
           }
+          //adding allAnswers in the results
+          result.all_answers = allAnswers;
         }
 
-        console.log(results);
+        // console.log(results);
         setResults(results);
 
         setIsFetching(false);
@@ -130,17 +125,73 @@ export default function App() {
         <RingLoader color="#36d7b7" size={150} />
       </div>
     );
-
   if (!isFetching) {
-    answers = results[currentQuestion].all_answers.map((element) => (
-      <li key={element} style={{ margin: "8px 15px 8px 0" }}>
+    let objAnswers = [];
+    let currentAnswers = results[currentQuestion].all_answers;
+
+    //creating an array of objects to set the clicked property
+    for (let answer of currentAnswers) {
+      let curObj = {};
+
+      //getting index and set it as key
+      const index = currentAnswers.indexOf(answer);
+      curObj[index] = answer;
+
+      curObj.clicked = false;
+      objAnswers.push(curObj);
+      console.log(objAnswers);
+    }
+
+    answers = objAnswers.map((object) => (
+      <li key={Object.keys(object)} style={{ margin: "8px 15px 8px 0" }}>
         <Answer
-          text={element}
-          onClick={() => handleClick(element)}
-          className={isClicked ? textColor(element) : "btn btn-light"}
+          text={Object.values(object)}
+          onClick={() => handleClick(Object.keys(object))}
+          className={testClassName(object)}
         />
       </li>
     ));
+
+    function testClassName(object) {
+      console.log(object.clicked);
+      return object?.clicked ? "btn btn-danger" : "btn btn-light";
+    }
+
+    function handleClick(element) {
+      setIsClicked(true);
+      // if (element === Object.values(seperateObjects)) console.log("is clicked");
+      // const selectedAnswer = Object.values(element)[0]; // textColor(element);
+      console.log(element);
+      console.log(objAnswers[element][0]);
+      // objAnswers[element].clicked = true;
+      objAnswers[element].clicked = true;
+      // if (
+      //   !isClicked &&
+      //   Object.values(element)[0] === results[currentQuestion].correct_answer
+      // ) {
+      //   setScore(score + 100 / results.length);
+
+      //   usersArray[userIndex].totalScore =
+      //     usersArray[userIndex].totalScore + 100 / results.length;
+
+      //   //set total score to usersArray and run the useEffect
+      //   setUsersArray(usersArray);
+      // }
+    }
+    console.log(objAnswers);
+
+    function textColor(element) {
+      let classN = "btn ";
+      // console.log(element);
+      // console.log(Object.values(element)[0]);
+      // if (Object.values(element)[1]) {
+      Object.values(element)[0] === results[currentQuestion].correct_answer
+        ? (classN += "btn-success")
+        : (classN += "btn-light");
+      // }
+
+      return classN;
+    }
 
     screen = (
       <QuizScreen
@@ -161,29 +212,6 @@ export default function App() {
   function handleSubmit(event) {
     fetchresults(questionId);
     event.preventDefault();
-  }
-
-  function handleClick(element) {
-    setIsClicked(true);
-
-    if (element === results[currentQuestion].correct_answer) {
-      setScore(score + 100 / results.length);
-
-      usersArray[userIndex].totalScore =
-        usersArray[userIndex].totalScore + 100 / results.length;
-
-      //set total score to usersArray and run the useEffect
-      setUsersArray(usersArray);
-    }
-  }
-
-  function textColor(element) {
-    let classN = "btn ";
-    element === results[currentQuestion].correct_answer
-      ? (classN += "btn-success")
-      : (classN += "btn-light");
-
-    return classN;
   }
 
   function nextQuestionFunction() {
