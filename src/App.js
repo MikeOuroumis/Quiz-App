@@ -137,8 +137,8 @@ export default function App() {
       const index = currentAnswers.indexOf(answer);
       curObj[index] = answer;
 
-      curObj.clicked = false;
-      objAnswers.push(curObj);
+      // curObj.clicked = false;
+      objAnswers.push({ ...curObj });
       console.log(objAnswers);
     }
 
@@ -162,8 +162,7 @@ export default function App() {
       // if (element === Object.values(seperateObjects)) console.log("is clicked");
       // const selectedAnswer = Object.values(element)[0]; // textColor(element);
       console.log(element);
-      console.log(objAnswers[element][0]);
-      // objAnswers[element].clicked = true;
+      console.log(objAnswers[element]);
       objAnswers[element].clicked = true;
       // if (
       //   !isClicked &&
