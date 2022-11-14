@@ -28,6 +28,7 @@ export default function App() {
   let answers = [];
   let screen = null;
   let [userIndex, setUserIndex] = useState(null);
+  let [objAnswers, setObjAnswers] = useState([]);
 
   useEffect(() => {
     fetchCategories();
@@ -126,70 +127,57 @@ export default function App() {
       </div>
     );
   if (!isFetching) {
-    let objAnswers = [];
     let currentAnswers = results[currentQuestion].all_answers;
+    if (objAnswers.length < 4) {
+      //creating an array of objects to set the clicked property
+      for (let answer of currentAnswers) {
+        let curObj = {};
 
-    //creating an array of objects to set the clicked property
-    for (let answer of currentAnswers) {
-      let curObj = {};
+        //getting index and set it as key
+        const index = currentAnswers.indexOf(answer);
+        curObj[index] = answer;
 
-      //getting index and set it as key
-      const index = currentAnswers.indexOf(answer);
-      curObj[index] = answer;
-
-      // curObj.clicked = false;
-      objAnswers.push({ ...curObj });
-      console.log(objAnswers);
+        objAnswers.push({ ...curObj });
+      }
     }
 
     answers = objAnswers.map((object) => (
       <li key={Object.keys(object)} style={{ margin: "8px 15px 8px 0" }}>
         <Answer
           text={Object.values(object)}
-          onClick={() => handleClick(Object.keys(object))}
+          onClick={() => handleClick(Object.keys(object)[0])}
           className={testClassName(object)}
         />
       </li>
     ));
 
     function testClassName(object) {
-      console.log(object.clicked);
-      return object?.clicked ? "btn btn-danger" : "btn btn-light";
+      let curValue = Object.values(object)[0];
+
+      //tests if the current value is equal to the correct answer and returns the proper color
+      return object.clicked
+        ? curValue === results[currentQuestion].correct_answer
+          ? "btn btn-success"
+          : "btn btn-danger"
+        : "btn btn-light";
     }
 
-    function handleClick(element) {
+    function handleClick(index) {
       setIsClicked(true);
-      // if (element === Object.values(seperateObjects)) console.log("is clicked");
-      // const selectedAnswer = Object.values(element)[0]; // textColor(element);
-      console.log(element);
-      console.log(objAnswers[element]);
-      objAnswers[element].clicked = true;
-      // if (
-      //   !isClicked &&
-      //   Object.values(element)[0] === results[currentQuestion].correct_answer
-      // ) {
-      //   setScore(score + 100 / results.length);
+      objAnswers[index].clicked = true;
 
-      //   usersArray[userIndex].totalScore =
-      //     usersArray[userIndex].totalScore + 100 / results.length;
+      const curQuestion = Object.values(objAnswers[index])[0];
+      console.log(objAnswers[index]);
+      if (curQuestion === results[currentQuestion].correct_answer) {
+        setScore(score + 100 / results.length);
 
-      //   //set total score to usersArray and run the useEffect
-      //   setUsersArray(usersArray);
-      // }
-    }
-    console.log(objAnswers);
+        usersArray[userIndex].totalScore =
+          usersArray[userIndex].totalScore + 100 / results.length;
 
-    function textColor(element) {
-      let classN = "btn ";
-      // console.log(element);
-      // console.log(Object.values(element)[0]);
-      // if (Object.values(element)[1]) {
-      Object.values(element)[0] === results[currentQuestion].correct_answer
-        ? (classN += "btn-success")
-        : (classN += "btn-light");
-      // }
-
-      return classN;
+        //set total score to usersArray and run the useEffect
+        setUsersArray(usersArray);
+      }
+      console.log(objAnswers);
     }
 
     screen = (
@@ -219,6 +207,7 @@ export default function App() {
     } else {
       setCurrentQuestion(currentQuestion + 1);
       setIsClicked(false);
+      setObjAnswers([]);
     }
   }
 
@@ -228,6 +217,7 @@ export default function App() {
     setIsClicked(false);
     setFinished(false);
     setIsFetching(true);
+    setObjAnswers([]);
   }
   function getUserIndex(index) {
     //add totalScore property if doesn't exist
