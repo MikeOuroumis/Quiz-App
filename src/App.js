@@ -128,6 +128,7 @@ export default function App() {
     );
   if (!isFetching) {
     let currentAnswers = results[currentQuestion].all_answers;
+    //refactor with useRef
     if (objAnswers.length < 4) {
       //creating an array of objects to set the clicked property
       for (let answer of currentAnswers) {
