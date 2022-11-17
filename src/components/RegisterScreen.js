@@ -92,7 +92,9 @@ export default function RegisterScreen(props) {
           name="name"
           value={user.name}
         ></input>
-        {errorMessages.name && <div>{errorMessages.name}</div>}
+        {errorMessages.name && (
+          <div className="errorMessages">{errorMessages.name}</div>
+        )}
         <br />
         <label style={{ color: "white" }}>Email</label>
         <br />
@@ -104,7 +106,9 @@ export default function RegisterScreen(props) {
           name="email"
           value={user.email}
         ></input>
-        {errorMessages.email && <div>{errorMessages.email}</div>}
+        {errorMessages.email && (
+          <div className="errorMessages">{errorMessages.email}</div>
+        )}
         <br />
         <label style={{ color: "white" }}>Password</label>
         <br />
@@ -117,10 +121,15 @@ export default function RegisterScreen(props) {
           value={user.password}
         ></input>
         <br />
-        {errorMessages.password && <div>{errorMessages.password}</div>} <br />
+        {errorMessages.password && (
+          <div className="errorMessages">{errorMessages.password}</div>
+        )}{" "}
+        <br />
         <Button type="submit" text="Submit" />
       </form>
-      <p>{!userIsNew && "The user already exists"} </p>
+      <p className="errorMessages">
+        {!userIsNew && "The user already exists"}{" "}
+      </p>
       <br />
       <div>
         Already have an account? Log in{" "}

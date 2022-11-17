@@ -28,7 +28,7 @@ html {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   color: white;
-  max-width: 600px;
+  width: 600px;
   min-width: 400px;
   background: #000000;
   padding: 30px;
@@ -50,4 +50,19 @@ li {
   border: 2px;
   border-color: blue;
   border-radius: 10%;
+}
+
+input {
+  border-radius: 10px;
+  height: 37px;
+  width: 60%;
+  text-align: center;
+}
+
+label {
+  margin: 10px;
+}
+
+.errorMessages {
+  color: red;
 }

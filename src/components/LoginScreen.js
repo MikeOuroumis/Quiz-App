@@ -91,7 +91,9 @@ export default function LoginScreen(props) {
           name="email"
           value={user.email}
         ></input>
-        {errorMessages.email && <div>{errorMessages.email}</div>}
+        {errorMessages.email && (
+          <div className="errorMessages">{errorMessages.email}</div>
+        )}
         <br />
         <label style={{ color: "white" }}>Password</label>
         <br />
@@ -104,7 +106,10 @@ export default function LoginScreen(props) {
           value={user.password}
         ></input>
         <br />
-        {errorMessages.password && <div>{errorMessages.password}</div>} <br />
+        {errorMessages.password && (
+          <div className="errorMessages">{errorMessages.password}</div>
+        )}{" "}
+        <br />
         <br />
         <Button type="submit" text="Submit" />
       </form>
